@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MYOTO - Cùng Bạn Trên Mọi Hành Trình</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .hero {
+      position: relative;
+      height: 520px;
+      background: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto 140px;
+      max-width: 1200px;
+      border-radius: 20px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1619767886558-efdc259b6e09?w=1600&q=80') center/cover;
+      opacity: .45;
+      border-radius: 20px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      padding: 100px 24px 0;
+      width: 100%;
+      height: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeUp .8s ease forwards
+    }
+    
+    .search-wrapper {
+      position: absolute;
+      top: 380px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(850px, 90vw);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .hero-content h1 {
+      font-size: clamp(32px, 5vw, 58px);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 18px;
+      letter-spacing: -1px
+    }
+
+    .hero-content>p {
+      font-size: 17px;
+      color: rgba(255, 255, 255, .85);
+      margin-bottom: 32px
+    }
+
+    .hero-content>p span {
+      color: #f97316;
+      font-weight: 700
+    }
+
+    .search-tabs {
+      display: flex;
+      background: #fff;
+      border-radius: 16px 16px 0 0;
+      overflow: hidden;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #4b5563;
+      padding: 16px 32px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .2s;
+    }
+
+    .tab-btn.active {
+      background: var(--green);
+      color: #fff;
+      border-radius: 0;
+    }
+
+    .tab-btn:hover:not(.active) {
+      color: var(--green);
+    }
+
+    .search-box {
+      background: #fff;
+      border-radius: 0 16px 16px 16px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+      width: 100%;
+      text-align: left;
+    }
+
+    .search-field {
+      flex: 1;
+      padding: 4px 20px;
+      border-right: 1px solid #e5e7eb
+    }
+
+    .search-field:last-of-type {
+      border-right: none
+    }
+
+    .search-field label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--gray);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 6px
+    }
+
+    .search-field select,
+    .search-field input {
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--black);
+      background: transparent;
+      width: 100%;
+      cursor: pointer
+    }
+
+    .search-btn {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      margin-left: 16px;
+      white-space: nowrap;
+      transition: background .2s;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .search-btn:hover {
+      background: var(--green-dark)
+    }
+
+    .promos {
+      background: #fff
+    }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .promo-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      aspect-ratio: 16/9;
+      transition: transform .3s
+    }
+
+    .promo-card:hover {
+      transform: translateY(-4px)
+    }
+
+    .promo-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      background: linear-gradient(0deg, rgba(0, 0, 0, .6) 0%, transparent 60%)
+    }
+
+    .promo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f97316;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      width: fit-content
+    }
+
+    .promo-inner h3 {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.3
+    }
+
+    .promo-inner p {
+      color: rgba(255, 255, 255, .85);
+      font-size: 13px;
+      margin-top: 4px
+    }
+
+    .pc1 {
+      background: linear-gradient(135deg, #c0392b, #96281b)
+    }
+
+    .pc2 {
+      background: linear-gradient(135deg, #27ae60, #1e8449)
+    }
+
+    .pc3 {
+      background: linear-gradient(135deg, #16a085, #1abc9c)
+    }
+
+    .cars {
+      background: var(--gray-light)
+    }
+
+    .cars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px
+    }
+
+    .car-card {
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow .3s, transform .3s;
+      cursor: pointer
+    }
+
+    .car-card:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .12);
+      transform: translateY(-3px)
+    }
+
+    .car-img {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden
+    }
+
+    .car-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .car-placeholder i {
+      font-size: 72px;
+      color: rgba(255, 255, 255, .5)
+    }
+
+    .cp1 {
+      background: linear-gradient(135deg, #bdc3c7, #95a5a6)
+    }
+
+    .cp2 {
+      background: linear-gradient(135deg, #2c3e50, #3d5a80)
+    }
+
+    .cp3 {
+      background: linear-gradient(135deg, #dce0e3, #b0bec5)
+    }
+
+    .cp4 {
+      background: linear-gradient(135deg, #1abc9c, #16a085)
+    }
+
+    .cp5 {
+      background: linear-gradient(135deg, #e0e0e0, #ccc)
+    }
+
+    .cp6 {
+      background: linear-gradient(135deg, #95a5a6, #7f8c8d)
+    }
+
+    .cp7 {
+      background: linear-gradient(135deg, #d5d8dc, #aab7b8)
+    }
+
+    .cp8 {
+      background: linear-gradient(135deg, #e8e8e8, #c8c8c8)
+    }
+
+    .discount-badge {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: #f97316;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px
+    }
+
+    .hot-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 0 var(--radius) 0 12px
+    }
+
+    .car-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 12px 14px 4px
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .tag-green {
+      background: var(--green-light);
+      color: var(--green-dark)
+    }
+
+    .tag-gray {
+      background: #f3f4f6;
+      color: var(--gray)
+    }
+
+    .car-info {
+      padding: 0 14px 14px
+    }
+
+    .car-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px
+    }
+
+    .car-specs {
+      display: flex;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 6px;
+      flex-wrap: wrap
+    }
+
+    .car-specs span {
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .car-location {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .car-location i {
+      color: var(--green-dark)
+    }
+
+    .car-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .rating {
+      font-size: 12px;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .rating i {
+      color: #f59e0b
+    }
+
+    .price {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--green-dark)
+    }
+
+    .price-old {
+      text-decoration: line-through;
+      color: var(--gray);
+      font-size: 12px
+    }
+
+    .locations {
+      background: #fff
+    }
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px
+    }
+
+    .location-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      aspect-ratio: 3/4;
+      transition: transform .3s
+    }
+
+    .location-card:hover {
+      transform: scale(1.03)
+    }
+
+    .loc-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .loc-placeholder i {
+      font-size: 72px;
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .lp1 {
+      background: linear-gradient(160deg, #ff6b6b, #ee5a24)
+    }
+
+    .lp2 {
+      background: linear-gradient(160deg, #1e90ff, #0052cc)
+    }
+
+    .lp3 {
+      background: linear-gradient(160deg, #f9ca24, #f0932b)
+    }
+
+    .lp4 {
+      background: linear-gradient(160deg, #6ab04c, #218c74)
+    }
+
+    .location-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0, 0, 0, .72) 0%, transparent 55%)
+    }
+
+    .location-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      color: #fff
+    }
+
+    .location-info h3 {
+      font-size: 18px;
+      font-weight: 800
+    }
+
+    .location-info span {
+      font-size: 13px;
+      opacity: .85
+    }
+
+    .airport-section {
+      margin-top: 32px
+    }
+
+    .airport-section h3 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .airport-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px
+    }
+
+    .airport-card {
+      background: var(--gray-light);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all .2s
+    }
+
+    .airport-card:hover {
+      border-color: var(--green);
+      background: var(--green-light)
+    }
+
+    .airport-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .airport-icon i {
+      font-size: 22px;
+      color: #fff
+    }
+
+    .airport-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px
+    }
+
+    .airport-card span {
+      font-size: 12px;
+      color: var(--gray)
+    }
+
+    .benefits {
+      background: var(--gray-light)
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px
+    }
+
+    .benefit-card {
+      text-align: center;
+      padding: 28px 24px;
+      background: #fff;
+      border-radius: var(--radius);
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .08)
+    }
+
+    .benefit-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .benefit-icon i {
+      font-size: 32px
+    }
+
+    .bi1 {
+      background: #fef3c7;
+      color: #d97706
+    }
+
+    .bi2 {
+      background: var(--green-light);
+      color: var(--green-dark)
+    }
+
+    .bi3 {
+      background: #ede9fe;
+      color: #7c3aed
+    }
+
+    .bi4 {
+      background: #fce7f3;
+      color: #db2777
+    }
+
+    .bi5 {
+      background: var(--green-light);
+      color: var(--green-dark)
+    }
+
+    .bi6 {
+      background: #dbeafe;
+      color: #2563eb
+    }
+
+    .benefit-card h3 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 8px
+    }
+
+    .benefit-card p {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.65
+    }
+
+    .benefit-card p strong {
+      color: #f97316
+    }
+
+    .benefit-card p em {
+      color: var(--green-dark);
+      font-style: normal;
+      font-weight: 600
+    }
+
+    .insurance {
+      background: #fff
+    }
+
+    .insurance-banner {
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 200px
+    }
+
+    .ins-left {
+      background: linear-gradient(135deg, #27ae60, #1e8449);
+      padding: 32px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .ins-right {
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      padding: 32px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .ins-left .label,
+    .ins-right .label {
+      font-size: 11px;
+      font-weight: 700;
+      opacity: .75;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .ins-left h3,
+    .ins-right h3 {
+      font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 12px
+    }
+
+    .ins-left a,
+    .ins-right a {
+      opacity: .85;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px
+    }
+
+    .partner-card {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: border-color .2s
+    }
+
+    .partner-card:hover {
+      border-color: var(--green)
+    }
+
+    .partner-card span {
+      font-size: 11px;
+      color: var(--gray);
+      text-align: center
+    }
+
+    .pl-gc {
+      color: #e67e22
+    }
+
+    .pl-mic {
+      color: #e74c3c
+    }
+
+    .pl-vni {
+      color: #2980b9
+    }
+
+    .pl-pvi {
+      color: #c0392b
+    }
+
+    .services {
+      background: var(--gray-light)
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px
+    }
+
+    .service-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      min-height: 280px;
+      cursor: pointer;
+      transition: transform .3s
+    }
+
+    .service-card:hover {
+      transform: scale(1.02)
+    }
+
+    .service-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 48px
+    }
+
+    .service-bg i {
+      font-size: 110px;
+      color: rgba(255, 255, 255, .1)
+    }
+
+    .service-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0, 0, 0, .65) 0%, rgba(0, 0, 0, .15) 100%)
+    }
+
+    .service-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 32px;
+      color: #fff
+    }
+
+    .service-content h3 {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      line-height: 1.3
+    }
+
+    .service-content p {
+      font-size: 13px;
+      opacity: .85;
+      margin-bottom: 18px
+    }
+
+    .service-btn {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      transition: background .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .service-btn:hover {
+      background: var(--green-dark)
+    }
+
+    .howto {
+      background: #fff
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px
+    }
+
+    .step-card {
+      text-align: center;
+      padding: 16px
+    }
+
+    .step-num {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin-bottom: 16px;
+      letter-spacing: 1px
+    }
+
+    .step-icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .step-icon i {
+      font-size: 40px;
+      color: var(--green-dark)
+    }
+
+    .step-card h3 {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.4
+    }
+
+    .cta-section {
+      background: var(--gray-light)
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px
+    }
+
+    .cta-card {
+      border-radius: var(--radius);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center
+    }
+
+    .cta-green {
+      background: var(--green-light)
+    }
+
+    .cta-blue {
+      background: var(--blue-light)
+    }
+
+    .cta-icon {
+      font-size: 28px;
+      color: var(--green-dark);
+      margin-bottom: 14px
+    }
+
+    .cta-card h3 {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      line-height: 1.3
+    }
+
+    .cta-card p {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.65;
+      margin-bottom: 20px
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .cta-img {
+      width: 180px;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .cta-img-1 {
+      background: linear-gradient(135deg, #a8edea, #fed6e3)
+    }
+
+    .cta-img-2 {
+      background: linear-gradient(135deg, #1a1a2e, #2d2d5e)
+    }
+
+    .cta-img i {
+      font-size: 64px;
+      color: rgba(255, 255, 255, .35)
+    }
+
+    .app-section {
+      background: #fff
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center
+    }
+
+    .app-text h2 {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 900;
+      margin-bottom: 16px;
+      line-height: 1.3
+    }
+
+    .app-text p {
+      color: var(--gray);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 28px
+    }
+
+    .app-btns {
+      display: flex;
+      gap: 12px
+    }
+
+    .app-store-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #111;
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px 18px;
+      text-decoration: none;
+      transition: opacity .2s
+    }
+
+    .app-store-btn:hover {
+      opacity: .8
+    }
+
+    .app-store-btn .icon i {
+      font-size: 26px
+    }
+
+    .app-store-btn .sub {
+      font-size: 10px;
+      opacity: .7;
+      display: block
+    }
+
+    .app-store-btn .main {
+      font-size: 15px;
+      font-weight: 700;
+      display: block
+    }
+
+    .phone-frame {
+      width: 220px;
+      border-radius: 36px;
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border: 8px solid #111;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, .3);
+      aspect-ratio: 9/19;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto
+    }
+
+    .phone-frame i {
+      font-size: 72px;
+      color: rgba(255, 255, 255, .3)
+    }
+
+    .blog {
+      background: var(--gray-light)
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px
+    }
+
+    .blog-left {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 16px
+    }
+
+    .blog-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      background: #111;
+      transition: transform .3s
+    }
+
+    .blog-card:hover {
+      transform: scale(1.02)
+    }
+
+    .blog-card-small {
+      aspect-ratio: 2/1
+    }
+
+    .blog-card-big {
+      aspect-ratio: 16/10
+    }
+
+    .blog-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .blog-placeholder i {
+      font-size: 64px;
+      color: rgba(255, 255, 255, .2)
+    }
+
+    .bp1 {
+      background: linear-gradient(135deg, #2d6a4f, #40916c)
+    }
+
+    .bp2 {
+      background: linear-gradient(135deg, #c0392b, #922b21)
+    }
+
+    .bp3 {
+      background: linear-gradient(135deg, #1a1a2e, #16213e)
+    }
+
+    .blog-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0, 0, 0, .75) 0%, transparent 55%)
+    }
+
+    .blog-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      color: #fff
+    }
+
+    .blog-date {
+      font-size: 11px;
+      color: rgba(255, 255, 255, .65);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .blog-info h3 {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45
+    }
+
+    .blog-card-big .blog-info h3 {
+      font-size: 20px
+    }
+
+    .tab-pane {
+      display: none;
+      width: 100%;
+    }
+    .tab-pane.active {
+      display: flex;
+    }
+    .tab1-content {
+      align-items: center;
+    }
+    .tab2-content {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .radio-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #111;
+      cursor: pointer;
+    }
+    .radio-label input {
+      display: none;
+    }
+    .radio-custom {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+    }
+    .radio-label input:checked + .radio-custom {
+      border-color: var(--green);
+    }
+    .radio-label input:checked + .radio-custom::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+    .help-text {
+      font-size: 13px;
+      color: var(--gray);
+      margin-top: 6px;
+    }
+
+    @media(max-width:1024px) {
+      .cars-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .promo-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .cta-grid,
+      .app-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:768px) {
+      .search-box {
+        flex-direction: column
+      }
+
+      .search-field {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        width: 100%
+      }
+
+      .benefits-grid,
+      .steps-grid,
+      .blog-grid {
+        grid-template-columns: 1fr
+      }
+
+      .locations-grid,
+      .airport-grid,
+      .partners-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .insurance-banner,
+      .services-grid {
+        grid-template-columns: 1fr
+      }
+
+      .cars-grid {
+        grid-template-columns: 1fr
+      }
+
+      .cta-card {
+        grid-template-columns: 1fr
+      }
+
+      .cta-img {
+        display: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="navbar"></nav>
+
+  <section class="hero" style="padding:0">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>MYOTO - Cùng Bạn Trên<br />Mọi Hành Trình</h1>
+      <p>Trải nghiệm sự khác biệt từ <span>hơn 10.000</span> xe gia đình đời mới khắp Việt Nam</p>
+      <div class="search-wrapper">
+        <div class="search-tabs">
+          <button class="tab-btn active" onclick="setTab(this, 1)"><i class="bi bi-car-front-fill"></i> Xe tự lái</button>
+          <button class="tab-btn" onclick="setTab(this, 2)"><i class="bi bi-person-badge"></i> Xe có tài xế</button>
+          <button class="tab-btn" onclick="setTab(this, 3)"><i class="bi bi-calendar-range"></i> Thuê xe dài hạn</button>
+        </div>
+        <div class="search-box">
+        <div class="tab-pane tab1-content active" id="tab1">
+          <div class="search-field">
+            <label><i class="bi bi-geo-alt-fill"></i> Địa điểm</label>
+            <select>
+              <option>TP. Hồ Chí Minh</option>
+              <option>Hà Nội</option>
+              <option>Đà Nẵng</option>
+              <option>Cần Thơ</option>
+              <option>Bình Dương</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label><i class="bi bi-calendar3"></i> Thời gian thuê</label>
+            <input type="text" value="21:00, 25/03/2026 — 20:00, 26/03/2026" readonly />
+          </div>
+          <button class="search-btn"><i class="bi bi-search"></i> Tìm Xe</button>
+        </div>
+
+        <div class="tab-pane tab2-content" id="tab2">
+          <div style="font-weight: 700; font-size: 16px; margin-bottom: 12px; color: #111;">Lộ trình</div>
+          <div class="radio-group" style="margin-bottom: 8px;">
+            <label class="radio-label">
+              <input type="radio" name="lotrinh" checked>
+              <span class="radio-custom"></span> Nội thành
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="lotrinh">
+              <span class="radio-custom"></span> Liên tỉnh
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="lotrinh">
+              <span class="radio-custom"></span> Liên tỉnh (1 chiều)
+            </label>
+          </div>
+          <div class="help-text" style="margin-bottom: 20px;">Di chuyển nội thành hoặc lân cận, lộ trình tự do. <i class="bi bi-question-circle"></i></div>
+          
+          <div style="display: flex; align-items: center; width: 100%; margin-bottom: 24px;">
+            <i class="bi bi-geo-alt" style="margin-right: 12px; font-size: 20px; color: #4b5563;"></i>
+            <input type="text" placeholder="Tôi muốn đón tại..." style="flex: 1; border: none; outline: none; font-size: 15px; background: transparent; color: #111;" />
+            <i class="bi bi-chevron-down" style="color: #111;"></i>
+          </div>
+
+          <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+            <div style="flex: 1;">
+              <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #111;">Thời gian</div>
+              <div style="display: flex; align-items: center;">
+                <i class="bi bi-calendar3" style="font-size: 18px; color: #4b5563; margin-right: 12px;"></i>
+                <input type="text" value="08:00, 27/03/2026 - 10:00, 27/03/2026" readonly style="flex: 1; border: none; outline: none; font-size: 15px; font-weight: 600; background: transparent; color: #111;" />
+                <i class="bi bi-chevron-down" style="color: #111; margin-right: 20px;"></i>
+              </div>
+            </div>
+            <button class="search-btn" style="margin-left: 0;">Tìm Xe</button>
+          </div>
+        </div>
+
+        <div class="tab-pane tab3-content" id="tab3">
+          <div style="display: flex; align-items: center; width: 100%;">
+            <i class="bi bi-geo-alt" style="font-size: 26px; color: #111; margin-right: 20px;"></i>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-size: 15px; color: #6b7280;">Địa điểm áp dụng hiện tại</span>
+              <span style="font-size: 22px; font-weight: 700; color: #111;">TP. Hồ Chí Minh</span>
+            </div>
+            <button class="search-btn" style="margin-left: 16px;" onclick="window.location.href='danh-sach-xe.html'">Tìm Xe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="promos">
+    <div class="section-title">
+      <h2>Chương Trình Khuyến Mãi</h2>
+      <p>Nhận nhiều ưu đãi hấp dẫn từ MYOTO</p>
+    </div>
+    <div class="promo-grid">
+      <div class="promo-card pc1">
+        <div class="promo-inner"><span class="promo-badge"><i class="bi bi-stars"></i> Lễ hội</span>
+          <h3>Đặt Sớm Xe Tốt<br />Sẵn Sàng Đón Lễ</h3>
+          <p>Ưu đãi đặc biệt mùa lễ hội</p>
+        </div>
+      </div>
+      <div class="promo-card pc2">
+        <div class="promo-inner"><span class="promo-badge"><i class="bi bi-tag-fill"></i> Mã TULAI</span>
+          <h3>Chọn Xe Đúng Gu<br />Vi Vu Đúng Mood</h3>
+          <p>Giảm ngay 8% — Áp dụng đến 31/03/2026</p>
+        </div>
+      </div>
+      <div class="promo-card pc3">
+        <div class="promo-inner"><span class="promo-badge"><i class="bi bi-clock-fill"></i> 48H giảm 10%</span>
+          <h3>Cần Xe Đúng Lúc<br />Chọn Đúng Khung Giờ</h3>
+          <p>Nhập mã 48H — Giảm ngay 10%</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cars">
+    <div class="section-title">
+      <h2>Xe Dành Cho Bạn</h2>
+    </div>
+    <div class="cars-grid">
+      <div class="car-card" onclick="window.location.href='chi-tiet-xe.html'">
+        <div class="car-img">
+          <div class="car-placeholder cp1"><i class="bi bi-car-front"></i></div><span class="discount-badge">Giảm
+            15%</span>
+        </div>
+        <div class="car-tags"><span class="tag tag-green"><i class="bi bi-shield-check"></i> Miễn thế chấp</span><span
+            class="tag tag-gray"><i class="bi bi-geo-alt"></i> Giao tận nơi</span></div>
+        <div class="car-info">
+          <div class="car-name">TOYOTA INNOVA 2018</div>
+          <div class="car-specs"><span><i class="bi bi-gear"></i> Số sàn</span><span><i class="bi bi-people"></i> 8
+              chỗ</span><span><i class="bi bi-droplet"></i> Xăng</span></div>
+          <div class="car-location"><i class="bi bi-geo-alt-fill"></i> Phường 17, Quận Bình Thạnh</div>
+          <div class="car-price-row"><span class="rating"><i class="bi bi-star-fill"></i> 4.5 · 3 chuyến</span>
+            <div><span class="price-old">999K</span> <span class="price">789K/ngày</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="car-card" onclick="window.location.href='chi-tiet-xe.html'">
+        <div class="car-img">
+          <div class="car-placeholder cp2"><i class="bi bi-car-front"></i></div><span class="discount-badge">Giảm
+            9%</span>
+        </div>
+        <div class="car-tags"><span class="tag tag-green"><i class="bi bi-shield-check"></i> Miễn thế chấp</span><span
+            class="tag tag-gray"><i class="bi bi-geo-alt"></i> Giao tận nơi</span></div>
+        <div class="car-info">
+          <div class="car-name">BMW X6 2009</div>
+          <div class="car-specs"><span><i class="bi bi-gear"></i> Số tự động</span><span><i class="bi bi-people"></i> 4
+              chỗ</span><span><i class="bi bi-droplet"></i> Xăng</span></div>
+          <div class="car-location"><i class="bi bi-geo-alt-fill"></i> Phường 01, Quận Bình Thạnh</div>
+          <div class="car-price-row"><span class="rating"><i class="bi bi-star-fill"></i> 5.0 · 2 chuyến</span>
+            <div><span class="price-old">1.579K</span> <span class="price">1.459K/ngày</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="car-card" onclick="window.location.href='chi-tiet-xe.html'">
+        <div class="car-img">
+          <div class="car-placeholder cp3"><i class="bi bi-car-front"></i></div><span class="discount-badge">Giảm
+            11%</span>
+        </div>
+        <div class="car-tags"><span class="tag tag-green"><i class="bi bi-shield-check"></i> Miễn thế chấp</span></div>
+        <div class="car-info">
+          <div class="car-name">MITSUBISHI XPANDER CROSS 2023</div>
+          <div class="car-specs"><span><i class="bi bi-gear"></i> Số tự động</span><span><i class="bi bi-people"></i> 7
+              chỗ</span><span><i class="bi bi-droplet"></i> Xăng</span></div>
+          <div class="car-location"><i class="bi bi-geo-alt-fill"></i> Phường 07, Quận Gò Vấp</div>
+          <div class="car-price-row"><span class="rating"><i class="bi bi-star-fill"></i> 5.0 · 13 chuyến</span>
+            <div><span class="price-old">1.281K</span> <span class="price">1.161K/ngày</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="car-card" onclick="window.location.href='chi-tiet-xe.html'">
+        <div class="car-img">
+          <div class="car-placeholder cp4"><i class="bi bi-lightning-charge"></i></div><span
+            class="hot-badge">Hot</span><span class="discount-badge">Giảm 12%</span>
+        </div>
+        <div class="car-tags"><span class="tag tag-gray"><i class="bi bi-geo-alt"></i> Giao tận nơi</span></div>
+        <div class="car-info">
+          <div class="car-name">VINFAST VF5 2025</div>
+          <div class="car-specs"><span><i class="bi bi-gear"></i> Số tự động</span><span><i class="bi bi-people"></i> 5
+              chỗ</span><span><i class="bi bi-lightning"></i> Điện</span></div>
+          <div class="car-location"><i class="bi bi-geo-alt-fill"></i> Phường 02, Quận Bình Thạnh</div>
+          <div class="car-price-row"><span class="rating"><i class="bi bi-star-fill"></i> 5.0 · 2 chuyến</span>
+            <div><span class="price-old">976K</span> <span class="price">876K/ngày</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="car-card" onclick="window.location.href='chi-tiet-xe.html'">
+        <div class="car-img">
+          <div class="car-placeholder cp5"><i class="bi bi-car-front"></i></div><span class="discount-badge">Giảm
+            10%</span>
+        </div>
+        <div class="car-tags"><span class="tag tag-green"><i class="bi bi-shield-check"></i> Miễn thế chấp</span><span
+            class="tag tag-gray"><i class="bi bi-geo-alt"></i> Giao tận nơi</span></div>
+        <div class="car-info">
+          <div class="car-name">MITSUBISHI XPANDER CROSS 2022</div>
+          <div class="car-specs"><span><i class="bi bi-gear"></i> Số tự động</span><span><i class="bi bi-people"></i> 7
+              chỗ</span><span><i class="bi bi-droplet"></i> Xăng</span></div>
+          <div class="car-location"><i class="bi bi-geo-alt-fill"></i> Phường 01, Quận Bình Thạnh</div>
+          <div class="car-price-row"><span class="rating"><i class="bi bi-star-fill"></i> 4.6 · 10 chuyến</span>
+            <div><span class="price-old">1.329K</span> <span class="price">1.200K/ngày</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="car-card" onclick="window.location.href='chi-tiet-xe.html'">
+        <div class="car-img">
+          <div class="car-placeholder cp6"><i class="bi bi-car-front"></i></div><span class="discount-badge">Giảm
+            10%</span>
+        </div>
+        <div class="car-tags"><span class="tag tag-green"><i class="bi bi-shield-check"></i> Miễn thế chấp</span><span
+            class="tag tag-gray"><i class="bi bi-geo-alt"></i> Giao tận nơi</span></div>
+        <div class="car-info">
+          <div class="car-name">MITSUBISHI XPANDER 2021</div>
+          <div class="car-specs"><span><i class="bi bi-gear"></i> Số tự động</span><span><i class="bi bi-people"></i> 7
+              chỗ</span><span><i class="bi bi-droplet"></i> Xăng</span></div>
+          <div class="car-location"><i class="bi bi-geo-alt-fill"></i> Phường 15, Quận Bình Thạnh</div>
+          <div class="car-price-row"><span class="rating"><i class="bi bi-star-fill"></i> 5.0 · 68 chuyến</span>
+            <div><span class="price-old">1.010K</span> <span class="price">922K/ngày</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="car-card">
+        <div class="car-img">
+          <div class="car-placeholder cp7"><i class="bi bi-car-front"></i></div><span class="discount-badge">Giảm
+            12%</span>
+        </div>
+        <div class="car-tags"><span class="tag tag-gray"><i class="bi bi-geo-alt"></i> Giao tận nơi</span></div>
+        <div class="car-info">
+          <div class="car-name">MITSUBISHI XPANDER 2024</div>
+          <div class="car-specs"><span><i class="bi bi-gear"></i> Số tự động</span><span><i class="bi bi-people"></i> 7
+              chỗ</span><span><i class="bi bi-droplet"></i> Xăng</span></div>
+          <div class="car-location"><i class="bi bi-geo-alt-fill"></i> Phường 17, Quận Bình Thạnh</div>
+          <div class="car-price-row"><span class="rating"><i class="bi bi-star-fill"></i> 4.6 · 25 chuyến</span>
+            <div><span class="price-old">1.129K</span> <span class="price">1.002K/ngày</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="car-card">
+        <div class="car-img">
+          <div class="car-placeholder cp8"><i class="bi bi-car-front"></i></div><span class="discount-badge">Giảm
+            13%</span>
+        </div>
+        <div class="car-tags"><span class="tag tag-green"><i class="bi bi-shield-check"></i> Miễn thế chấp</span></div>
+        <div class="car-info">
+          <div class="car-name">MITSUBISHI XPANDER 2025</div>
+          <div class="car-specs"><span><i class="bi bi-gear"></i> Số tự động</span><span><i class="bi bi-people"></i> 7
+              chỗ</span><span><i class="bi bi-droplet"></i> Xăng</span></div>
+          <div class="car-location"><i class="bi bi-geo-alt-fill"></i> Phường 07, Quận Phú Nhuận</div>
+          <div class="car-price-row"><span class="rating"><i class="bi bi-star-fill"></i> 4.6 · 5 chuyến</span>
+            <div><span class="price-old">1.160K</span> <span class="price">982K/ngày</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="locations">
+    <div class="section-title">
+      <h2>Địa Điểm Nổi Bật</h2>
+    </div>
+    <div class="locations-grid">
+      <div class="location-card">
+        <div class="loc-placeholder lp1"><i class="bi bi-buildings"></i></div>
+        <div class="location-overlay"></div>
+        <div class="location-info">
+          <h3>TP. Hồ Chí Minh</h3><span>5000+ xe</span>
+        </div>
+      </div>
+      <div class="location-card">
+        <div class="loc-placeholder lp2"><i class="bi bi-bank2"></i></div>
+        <div class="location-overlay"></div>
+        <div class="location-info">
+          <h3>Hà Nội</h3><span>2500+ xe</span>
+        </div>
+      </div>
+      <div class="location-card">
+        <div class="loc-placeholder lp3"><i class="bi bi-water"></i></div>
+        <div class="location-overlay"></div>
+        <div class="location-info">
+          <h3>Đà Nẵng</h3><span>500+ xe</span>
+        </div>
+      </div>
+      <div class="location-card">
+        <div class="loc-placeholder lp4"><i class="bi bi-building"></i></div>
+        <div class="location-overlay"></div>
+        <div class="location-info">
+          <h3>Bình Dương</h3><span>500+ xe</span>
+        </div>
+      </div>
+    </div>
+    <div class="airport-section">
+      <h3><i class="bi bi-airplane-engines-fill" style="color:var(--green-dark)"></i> Giao xe tại sân bay</h3>
+      <div class="airport-grid">
+        <div class="airport-card">
+          <div class="airport-icon" style="background:linear-gradient(135deg,#3498db,#2980b9)"><i
+              class="bi bi-airplane-fill"></i></div>
+          <h4>Tân Sơn Nhất</h4><span>2000+ xe</span>
+        </div>
+        <div class="airport-card">
+          <div class="airport-icon" style="background:linear-gradient(135deg,#27ae60,#1e8449)"><i
+              class="bi bi-airplane-fill"></i></div>
+          <h4>Ga T3 (TSN)</h4><span>2000+ xe</span>
+        </div>
+        <div class="airport-card">
+          <div class="airport-icon" style="background:linear-gradient(135deg,#e74c3c,#c0392b)"><i
+              class="bi bi-airplane-fill"></i></div>
+          <h4>Nội Bài</h4><span>200+ xe</span>
+        </div>
+        <div class="airport-card">
+          <div class="airport-icon" style="background:linear-gradient(135deg,#f39c12,#e67e22)"><i
+              class="bi bi-airplane-fill"></i></div>
+          <h4>Đà Nẵng</h4><span>100+ xe</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <div class="section-title">
+      <h2>Ưu Điểm Của MYOTO</h2>
+      <p>Những tính năng giúp bạn dễ dàng hơn khi thuê xe trên MYOTO</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon bi1"><i class="bi bi-shield-check-fill"></i></div>
+        <h3>Lái xe an toàn cùng MYOTO</h3>
+        <p>Chuyến đi được bảo vệ với Gói bảo hiểm từ MIC & DBV (VNI). Khách thuê chỉ bồi thường tối đa <strong>2.000.000
+            VNĐ</strong> trong trường hợp có sự cố.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi2"><i class="bi bi-check-circle-fill"></i></div>
+        <h3>An tâm đặt xe</h3>
+        <p><em>Không tính phí hủy trong vòng 1h</em> sau khi thanh toán. Hoàn tiền 100% nếu chủ xe hủy trong vòng 7 ngày
+          trước chuyến đi.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi3"><i class="bi bi-file-earmark-check-fill"></i></div>
+        <h3>Thủ tục đơn giản</h3>
+        <p>Chỉ cần CCCD gắn chip (Hoặc Passport) & Giấy phép lái xe là bạn đủ điều kiện thuê xe.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi4"><i class="bi bi-credit-card-fill"></i></div>
+        <h3>Thanh toán dễ dàng</h3>
+        <p>ATM, thẻ Visa & Ví điện tử (Momo, VnPay, ZaloPay).</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi5"><i class="bi bi-send-fill"></i></div>
+        <h3>Giao xe tận nơi</h3>
+        <p>Giao xe tận nhà/sân bay. Phí tiết kiệm chỉ từ 15k/km.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon bi6"><i class="bi bi-grid-fill"></i></div>
+        <h3>Dòng xe đa dạng</h3>
+        <p>Hơn 100 dòng xe: Mini, Sedan, CUV, SUV, MPV, Bán tải.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="insurance">
+    <div class="section-title">
+      <h2>Hành Trình Của Bạn Luôn Được Bảo Vệ</h2>
+    </div>
+    <div class="insurance-banner">
+      <div class="ins-left"><span class="label"><i class="bi bi-shield-fill"></i> Bảo Hiểm Thuê Xe</span>
+        <h3>An tâm hành trình</h3><a>Tìm hiểu thêm <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="ins-right"><span class="label"><i class="bi bi-people-fill"></i> Bảo Hiểm Người Trên Xe</span>
+        <h3>Bảo vệ toàn diện</h3><a>Tìm hiểu thêm <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="partners-grid">
+      <div class="partner-card">
+        <div class="pl-gc"><i class="bi bi-award-fill" style="font-size:32px"></i></div><strong
+          style="font-size:14px">GLOBAL CARE</strong><span>Best price, best service</span>
+      </div>
+      <div class="partner-card">
+        <div class="pl-mic"><i class="bi bi-patch-check-fill" style="font-size:32px"></i></div><strong
+          style="font-size:14px">MIC Insurance</strong><span>Bảo hiểm uy tín</span>
+      </div>
+      <div class="partner-card">
+        <div class="pl-vni"><i class="bi bi-star-fill" style="font-size:32px"></i></div><strong
+          style="font-size:14px">Bảo Hiểm Hàng Không</strong><span>Vững niềm tin</span>
+      </div>
+      <div class="partner-card">
+        <div class="pl-pvi"><i class="bi bi-trophy-fill" style="font-size:32px"></i></div><strong
+          style="font-size:14px">PVI Insurance</strong><span>Đối tác tin cậy</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="section-title">
+      <h2>Dịch Vụ Của MYOTO</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-bg" style="background:linear-gradient(135deg,#1a1a2e,#2d4a6e)"><i
+            class="bi bi-steering-wheel"></i></div>
+        <div class="service-overlay"></div>
+        <div class="service-content">
+          <h3>Xe đã sẵn sàng.<br />Bắt đầu hành trình ngay!</h3>
+          <p>Tự tay cầm lái chiếc xe bạn yêu thích cho hành trình thêm hứng khởi.</p><button class="service-btn"><i
+              class="bi bi-car-front-fill"></i> Thuê xe tự lái</button>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-bg" style="background:linear-gradient(135deg,#0f3460,#533483)"><i
+            class="bi bi-person-badge"></i></div>
+        <div class="service-overlay"></div>
+        <div class="service-content">
+          <h3>Tài xế của bạn đã đến!</h3>
+          <p>Chuyến đi thêm thú vị cùng các bác tài 5★ trên MYOTO.</p><button class="service-btn"><i
+              class="bi bi-person-badge-fill"></i> Thuê xe có tài xế</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="howto">
+    <div class="section-title">
+      <h2>Hướng Dẫn Thuê Xe</h2>
+      <p>Chỉ với 4 bước đơn giản để trải nghiệm thuê xe MYOTO một cách nhanh chóng</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon"><i class="bi bi-phone-fill"></i></div>
+        <h3>Đặt xe trên app/web MYOTO</h3>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon"><i class="bi bi-key-fill"></i></div>
+        <h3>Nhận xe</h3>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon"><i class="bi bi-signpost-split-fill"></i></div>
+        <h3>Bắt đầu hành trình</h3>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon"><i class="bi bi-star-fill"></i></div>
+        <h3>Trả xe & kết thúc chuyến đi</h3>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-grid">
+      <div class="cta-card cta-green">
+        <div>
+          <div class="cta-icon"><i class="bi bi-info-circle-fill"></i></div>
+          <h3>Bạn muốn biết thêm về MYOTO?</h3>
+          <p>MYOTO kết nối khách hàng có nhu cầu thuê xe với hàng ngàn chủ xe trên toàn quốc. Hướng đến xây dựng cộng
+            đồng người dùng ô tô văn minh & uy tín tại Việt Nam.</p>
+          <div class="cta-btns"><a href="ve-myoto.html" class="btn-green"
+              style="text-decoration:none;display:inline-flex;align-items:center;gap:8px"><i
+                class="bi bi-arrow-right-circle"></i> Tìm hiểu thêm</a></div>
+        </div>
+        <div class="cta-img cta-img-1"><i class="bi bi-person-arms-up"></i></div>
+      </div>
+      <div class="cta-card cta-blue">
+        <div>
+          <div class="cta-icon"><i class="bi bi-car-front-fill"></i></div>
+          <h3>Bạn muốn cho thuê xe?</h3>
+          <p>Hơn 10.000 chủ xe đang cho thuê hiệu quả trên MYOTO. Đăng ký trở thành đối tác ngay hôm nay để gia tăng thu
+            nhập hàng tháng.</p>
+          <div class="cta-btns"><a href="chu-xe.html" class="btn-outline"
+              style="text-decoration:none;display:inline-flex;align-items:center;gap:8px"><i class="bi bi-book"></i> Tìm
+              hiểu ngay</a><a href="chu-xe.html" class="btn-dark"
+              style="text-decoration:none;display:inline-flex;align-items:center;gap:8px"><i
+                class="bi bi-plus-circle"></i> Đăng ký xe</a></div>
+        </div>
+        <div class="cta-img cta-img-2"><i class="bi bi-moon-stars-fill"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="app-section">
+    <div class="app-grid">
+      <div class="app-text">
+        <h2>Trải nghiệm trọn vẹn cùng ứng dụng MYOTO</h2>
+        <p>Đặt xe, quản lý chuyến đi và nhận ưu đãi độc quyền ngay trên ứng dụng MYOTO. Giao diện thân thiện, luôn sẵn
+          sàng cùng bạn trên mọi hành trình.</p>
+        <div class="app-btns"><a href="#" class="app-store-btn"><span class="icon"><i class="bi bi-apple"></i></span>
+            <div class="text"><span class="sub">Download on the</span><span class="main">App Store</span></div>
+          </a><a href="#" class="app-store-btn"><span class="icon"><i class="bi bi-google-play"></i></span>
+            <div class="text"><span class="sub">GET IT ON</span><span class="main">Google Play</span></div>
+          </a></div>
+      </div>
+      <div>
+        <div class="phone-frame"><i class="bi bi-phone-flip"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog">
+    <div class="section-title">
+      <h2>MYOTO Blog</h2>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-left">
+        <div class="blog-card blog-card-small">
+          <div class="blog-placeholder bp1"><i class="bi bi-flower1"></i></div>
+          <div class="blog-overlay"></div>
+          <div class="blog-info">
+            <div class="blog-date"><i class="bi bi-calendar3"></i> 18/03/2026</div>
+            <h3>Gợi ý những địa điểm cặp đôi hẹn hò cuối tuần bằng xe tự lái 4 chỗ</h3>
+          </div>
+        </div>
+        <div class="blog-card blog-card-small">
+          <div class="blog-placeholder bp2"><i class="bi bi-car-front"></i></div>
+          <div class="blog-overlay"></div>
+          <div class="blog-info">
+            <div class="blog-date"><i class="bi bi-calendar3"></i> 17/01/2026</div>
+            <h3>Hành trình đón Tết thêm trọn vẹn khi chủ động phương tiện với xe riêng tự lái</h3>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card blog-card-big">
+        <div class="blog-placeholder bp3"><i class="bi bi-cloud-rain-heavy-fill"></i></div>
+        <div class="blog-overlay"></div>
+        <div class="blog-info">
+          <div class="blog-date"><i class="bi bi-calendar3"></i> 26/11/2025</div>
+          <h3>Bảo dưỡng xe ô tô mùa mưa, giữ xe luôn an toàn và bền bỉ</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer"></footer>
+  <script src="shared.js"></script>
+  <script>
+    renderNavbar('home'); 
+    renderFooter(); 
+    renderModal(); 
+    function setTab(btn, tabIndex) { 
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); 
+      btn.classList.add('active'); 
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab' + tabIndex).classList.add('active');
+    }
+  </script>
+</body>
+
+</html>
