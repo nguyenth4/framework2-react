@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trở thành chủ xe - Mioto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    /* ===== HERO ===== */
+    .host-hero {
+      position: relative; min-height: 520px;
+      background: linear-gradient(135deg,#1a1a2e,#2d3a4a);
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .host-hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.45); }
+    .host-hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1600&q=80') center/cover;
+      opacity: .5;
+    }
+    .host-hero-box {
+      position: relative; z-index: 2;
+      background: rgba(255,255,255,.97); border-radius: var(--radius);
+      padding: 44px 48px; margin: 48px; max-width: 520px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.3);
+    }
+    .host-hero-box h1 {
+      font-size: clamp(26px, 3.5vw, 38px); font-weight: 900;
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .host-hero-box h1 span { color: var(--green-dark); }
+    .host-hero-box p { font-size: 14px; color: var(--gray); line-height: 1.7; margin-bottom: 20px; }
+    .host-hero-box .hotline { font-size: 13px; color: var(--gray); margin-bottom: 24px; }
+    .host-hero-box .hotline a { color: var(--green-dark); font-weight: 700; }
+    .host-hero-cta { background: var(--black); color: #fff; border: none; width: 100%; padding: 16px; border-radius: 10px; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 700; transition: opacity .2s; }
+    .host-hero-cta:hover { opacity: .85; }
+
+    /* ===== WHY ===== */
+    .why { padding: 80px 48px; background: #fff; }
+    .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .why-card {
+      background: var(--green-light); border-radius: var(--radius);
+      padding: 28px; display: flex; align-items: flex-start; gap: 20px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .why-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(46,204,113,.15); }
+    .why-icon {
+      width: 60px; height: 60px; min-width: 60px;
+      background: #fff; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 28px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    }
+    .why-text h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; color: var(--black); }
+    .why-text p { font-size: 13px; color: #444; line-height: 1.6; }
+    .why-text p strong { color: var(--green-dark); }
+
+    /* ===== INCOME TABLE ===== */
+    .income { padding: 80px 48px; background: var(--gray-light); }
+    .income .section-title p { max-width: 600px; margin: 0 auto; }
+    .income-table {
+      width: 100%; border-collapse: collapse;
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      margin-top: 8px;
+    }
+    .income-table thead tr { background: var(--black); color: #fff; }
+    .income-table th { padding: 16px 24px; text-align: left; font-size: 14px; font-weight: 700; }
+    .income-table th:not(:first-child) { text-align: center; }
+    .income-table tbody tr { background: #fff; border-bottom: 1px solid #f0f0f0; transition: background .15s; }
+    .income-table tbody tr:hover { background: var(--green-light); }
+    .income-table tbody tr:nth-child(even) { background: #fafafa; }
+    .income-table tbody tr:nth-child(even):hover { background: var(--green-light); }
+    .income-table td { padding: 14px 24px; font-size: 14px; }
+    .income-table td:not(:first-child) { text-align: center; font-weight: 600; color: var(--green-dark); }
+    .income-table td:first-child { color: var(--black); font-weight: 500; }
+    .income-table tfoot td { padding: 12px 24px; font-size: 12px; color: var(--gray); font-style: italic; background: #f9f9f9; }
+    .income-highlight { background: linear-gradient(90deg,var(--green-light),#fff) !important; }
+    .income-highlight td:first-child { font-weight: 700 !important; }
+
+    /* ===== STEPS ===== */
+    .host-steps { padding: 80px 48px; background: #fff; }
+    .host-steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .host-step {
+      background: var(--green-light); border-radius: var(--radius);
+      padding: 32px; position: relative;
+    }
+    .step-badge {
+      position: absolute; top: -1px; right: -1px;
+      background: var(--green); color: #fff;
+      width: 36px; height: 36px; border-radius: 0 var(--radius) 0 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 900;
+    }
+    .host-step-icon { font-size: 36px; margin-bottom: 16px; }
+    .host-step h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
+    .host-step p { font-size: 13px; color: #555; line-height: 1.7; }
+    .host-step p a { color: var(--green-dark); font-weight: 600; text-decoration: underline; cursor: pointer; }
+
+    /* ===== FINAL CTA ===== */
+    .final-cta {
+      position: relative; padding: 80px 48px;
+      background: linear-gradient(135deg,#1a2a1a,#1e3a1e);
+      overflow: hidden; text-align: right;
+    }
+    .final-cta-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80') center/cover; opacity: .3; }
+    .final-cta-overlay { position: absolute; inset: 0; background: linear-gradient(135deg,rgba(0,0,0,.5),rgba(0,0,0,.2)); }
+    .final-cta-content { position: relative; z-index: 2; color: #fff; max-width: 500px; margin-left: auto; }
+    .final-cta-content h2 { font-size: clamp(26px,3.5vw,40px); font-weight: 900; margin-bottom: 16px; line-height: 1.3; }
+    .final-cta-content p { font-size: 15px; opacity: .85; margin-bottom: 28px; line-height: 1.7; }
+    .final-cta-btn { background: var(--green); color: #fff; border: none; padding: 16px 36px; border-radius: 10px; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 700; transition: background .2s; }
+    .final-cta-btn:hover { background: var(--green-dark); }
+
+    @media(max-width:1024px) {
+      .why-grid { grid-template-columns: repeat(2,1fr); }
+      .host-steps-grid { grid-template-columns: 1fr; }
+      .why, .income, .host-steps, .final-cta { padding: 56px 24px; }
+      .host-hero-box { margin: 32px 24px; }
+    }
+    @media(max-width:768px) {
+      .why-grid { grid-template-columns: 1fr; }
+      .final-cta { text-align: left; }
+      .final-cta-content { margin-left: 0; }
+      .income-table { font-size: 13px; }
+      .income-table th, .income-table td { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar"></nav>
+
+<!-- HERO -->
+<section class="host-hero" style="padding:0">
+  <div class="host-hero-bg"></div>
+  <div class="host-hero-overlay"></div>
+  <div class="host-hero-box">
+    <h1><span>Cho Thuê Xe</span> Trên Mioto<br/>Để Gia Tăng Thu Nhập<br/>Đến 10tr/Tháng!</h1>
+    <p>Mioto không thu phí khi bạn đăng xe. Bạn chỉ chia sẻ phí dịch vụ với Mioto khi có giao dịch cho thuê thành công.</p>
+    <p class="hotline">Hotline: <a href="tel:19009217">1900 9217</a> (7AM - 10PM)<br/>Hoặc để lại tin nhắn cho Mioto qua Fanpage</p>
+    <button class="host-hero-cta" onclick="openModal('register')">Đăng ký ngay</button>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="section-title"><h2>Tại sao bạn nên cho thuê xe trên MIOTO?</h2></div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">💰</div>
+      <div class="why-text">
+        <h3>Thu nhập</h3>
+        <p>Gia tăng thu nhập từ <strong>5-10 triệu/tháng</strong> chỉ với chiếc xe đang nhàn rỗi của bạn.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">⚡</div>
+      <div class="why-text">
+        <h3>Nhanh chóng</h3>
+        <p>Thủ tục đăng ký cho thuê <strong>ONLINE</strong> nhanh chóng trong <strong>10 phút</strong>.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📅</div>
+      <div class="why-text">
+        <h3>Chủ động</h3>
+        <p>Toàn quyền quyết định <strong>giá & thời gian</strong> cho thuê theo lịch của bạn.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🛡️</div>
+      <div class="why-text">
+        <h3>Bảo hiểm</h3>
+        <p>Hỗ trợ bảo hiểm mất cắp xe nguyên chiếc từ <strong>MIC & DBV (VNI)</strong>.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📍</div>
+      <div class="why-text">
+        <h3>GPS</h3>
+        <p>Hỗ trợ cài đặt GPS với <strong>giá gốc</strong> để quản lí xe an toàn và yên tâm hơn.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💬</div>
+      <div class="why-text">
+        <h3>Chăm sóc đối tác</h3>
+        <p>Đội ngũ Mioto tư vấn chặt chẽ <strong>QUY TRÌNH & KINH NGHIỆM</strong> cho thuê chặt chẽ và an toàn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCOME TABLE -->
+<section class="income">
+  <div class="section-title">
+    <h2>Thu nhập ước tính của chủ xe</h2>
+    <p>Mioto dựa trên dữ liệu thu nhập bình quân 6 tháng gần nhất của các chủ xe đang kinh doanh hiệu quả trên hệ thống và thống kê theo từng khu vực.</p>
+  </div>
+  <table class="income-table">
+    <thead>
+      <tr>
+        <th>Khu vực</th>
+        <th>Thu nhập /tháng<br/><small style="font-weight:400;opacity:.8">(Sau khi trừ phí dịch vụ)</small></th>
+        <th>Số ngày cho thuê/tháng</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="income-highlight">
+        <td>TP.HCM (khu vực trung tâm)</td>
+        <td>Từ 5 - 10 triệu</td>
+        <td>Từ 6 - 12 ngày</td>
+      </tr>
+      <tr><td>TP.HCM (khu vực ngoại thành)</td><td>3 - 6 triệu</td><td>4 - 8 ngày</td></tr>
+      <tr class="income-highlight">
+        <td>Hà Nội (khu vực trung tâm)</td>
+        <td>5 - 8 triệu</td>
+        <td>6 - 10 ngày</td>
+      </tr>
+      <tr><td>Hà Nội (khu vực ngoại thành)</td><td>3 - 6 triệu</td><td>4 - 8 ngày</td></tr>
+      <tr><td>Đà Nẵng</td><td>3 - 6 triệu</td><td>4 - 8 ngày</td></tr>
+      <tr><td>Bình Dương</td><td>3 - 6 triệu</td><td>4 - 8 ngày</td></tr>
+      <tr><td>Biên Hòa</td><td>3 - 6 triệu</td><td>4 - 8 ngày</td></tr>
+      <tr><td>Đà Lạt</td><td>3 - 6 triệu</td><td>4 - 8 ngày</td></tr>
+      <tr><td>Hải Phòng</td><td>3 - 6 triệu</td><td>4 - 8 ngày</td></tr>
+      <tr><td>Nha Trang</td><td>2 - 5 triệu</td><td>3 - 6 ngày</td></tr>
+      <tr><td>Quy Nhơn</td><td>2 - 5 triệu</td><td>3 - 6 ngày</td></tr>
+      <tr><td>TP khác</td><td>2 - 5 triệu</td><td>3 - 6 ngày</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="3">* Lưu ý: Thu nhập của chủ xe khi cho thuê trên Mioto còn tùy thuộc vào nhiều yếu tố, bao gồm thời gian xe sẵn sàng cho thuê mỗi tháng, mức giá cho thuê và nhu cầu thuê xe ở khu vực của bạn.</td></tr></tfoot>
+  </table>
+</section>
+
+<!-- STEPS -->
+<section class="host-steps">
+  <div class="section-title"><h2>Ba bước đăng ký xe trên MIOTO</h2></div>
+  <div class="host-steps-grid">
+    <div class="host-step">
+      <div class="step-badge">1.</div>
+      <div class="host-step-icon">📱</div>
+      <h3>Tải app và điền thông tin</h3>
+      <p>Cách 1: Tải app Mioto, vào mục Quản lý cho thuê và đăng ký xe theo hướng dẫn.<br/><br/>Cách 2: Điền thông tin theo mẫu để Mioto hỗ trợ tư vấn quy trình đăng ký. <a onclick="window.location='dang-ky.html'">(Mẫu đăng ký)</a></p>
+    </div>
+    <div class="host-step">
+      <div class="step-badge">2.</div>
+      <div class="host-step-icon">✅</div>
+      <h3>Xác nhận thông tin</h3>
+      <p>Nhân viên Mioto liên hệ chủ xe tư vấn thủ tục & quy trình cho thuê xe trong vòng 1 ngày sau khi nhận được thông tin.</p>
+    </div>
+    <div class="host-step">
+      <div class="step-badge">3.</div>
+      <div class="host-step-icon">🚗</div>
+      <h3>Duyệt xe</h3>
+      <p>Bắt đầu cho thuê xe trên Mioto sau khi nhận thông báo xe đã được phê duyệt. Chào mừng bạn gia nhập cộng đồng chủ xe Mioto!</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-bg"></div>
+  <div class="final-cta-overlay"></div>
+  <div class="final-cta-content">
+    <h2>Trở thành đối tác chủ xe của MIOTO</h2>
+    <p>Cho thuê xe trên Mioto để gia tăng thu nhập hàng tháng và gặp gỡ nhiều bạn bè mới!</p>
+    <button class="final-cta-btn" onclick="openModal('register')">Đăng ký ngay</button>
+  </div>
+</section>
+
+<footer id="footer"></footer>
+
+<script src="shared.js"></script>
+<script>
+  renderNavbar('chu-xe');
+  renderFooter();
+  renderModal();
+</script>
+</body>
+</html>
