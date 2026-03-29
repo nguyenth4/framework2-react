@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import CarList from "./pages/CarList";
 import CarDetail from "./pages/CarDetail";
 import Host from "./pages/Host";
+import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="cars" element={<CarList />} />
           <Route path="cars/:id" element={<CarDetail />} />
           <Route path="host" element={<Host />} />
+          <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="about" element={<About />} />
         </Route>
