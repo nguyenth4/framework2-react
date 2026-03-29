@@ -52,8 +52,21 @@ const Header = () => {
       </ul>
       <div className="nav-btns">
         <Link
+          to="/login"
+          className="btn-green"
+          style={{
+            textDecoration: "none",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxSizing: "border-box",
+          }}
+        >
+          Đăng nhập
+        </Link>
+        <Link
           to="/register"
-          className="btn-outline"
+          className="btn-green"
           style={{
             textDecoration: "none",
             display: "inline-flex",
@@ -64,7 +77,6 @@ const Header = () => {
         >
           Đăng ký
         </Link>
-        <button className="btn-green">Đăng nhập</button>
       </div>
     </nav>
   );
