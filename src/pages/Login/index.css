@@ -1,0 +1,67 @@
+/* src/pages/Login/index.css */
+.form-group input {
+  width: 100%;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.form-group input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+}
+
+/* wrapper password login */
+.form-group div {
+  position: relative;
+}
+
+/* nút hiện/ẩn password */
+.form-group div button {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--gray);
+  font-size: 14px;
+}
+
+/* button login */
+form button[type="submit"] {
+  width: 100%;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+form button[type="submit"]:hover {
+  background: var(--green-dark);
+}
+
+/* label login */
+.form-group label {
+  margin-bottom: 6px;
+  display: block;
+  font-weight: 600;
+}
+
+/* fix spacing */
+.form-group {
+  margin-bottom: 16px;
+}
