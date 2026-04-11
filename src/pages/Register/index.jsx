@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 const Register = () => {
@@ -14,10 +15,39 @@ const Register = () => {
   } = useForm();
 
   const password = watch("password", "");
+  
+  // Các biến xử lý chuyển trang và lỗi
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const onRegister = (data) => {
-    console.log("Register data:", data);
-    alert("Đăng ký thành công!");
+  const onRegister = async (data) => {
+    try {
+      setErrorMessage(""); 
+      
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: data.name, // Lấy ô Tên hiển thị (name) tương ứng với ô username của API
+          email: data.email,
+          password: data.password
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("Đăng ký tài khoản thành công! Mời bạn đăng nhập.");
+        navigate("/login"); // Đá sang trang đăng nhập ngay lập tức
+      } else {
+        setErrorMessage(result.message || "Đăng ký thất bại do lỗi dữ liệu.");
+      }
+    } catch (error) {
+      setErrorMessage("Máy chủ hiện không phản hồi. Bạn vui lòng bật lại Server backend.");
+      console.error("Lỗi kĩ thuật đăng ký:", error);
+    }
   };
 
   return (
@@ -65,36 +95,15 @@ const Register = () => {
             </p>
 
             <form onSubmit={handleSubmit(onRegister)}>
-              <div className="form-group auto-style-142">
-                <label className="auto-style-143">
-                  <i className="bi bi-telephone-fill"></i> Số điện thoại
-                </label>
-                <div className="input-wrap auto-style-144">
-                  <i className="bi bi-telephone lead-icon auto-style-145"></i>
-                  <input
-                    type="tel"
-                    placeholder="Nhập số điện thoại"
-                    {...register("phone", {
-                      required: "Vui lòng nhập số điện thoại",
-                      pattern: {
-                        value: /^[0-9]{10,11}$/,
-                        message: "Số điện thoại không hợp lệ",
-                      },
-                    })}
-                    style={{
-                      width: "100%",
-                      border: errors.phone
-                        ? "1.5px solid red"
-                        : "1.5px solid #e5e7eb",
-                      borderRadius: "10px",
-                      padding: "13px 16px 13px 42px",
-                    }}
-                  />
+              
+              {/* KHU VỰC HIỂN THỊ LỖI (Ví dụ: Trùng email) */}
+              {errorMessage && (
+                <div style={{ padding: "10px", marginBottom: "15px", backgroundColor: "#ffebee", color: "red", borderRadius: "5px", fontSize: "14px", fontWeight: "bold", textAlign: "center" }}>
+                  {errorMessage}
                 </div>
-                {errors.phone && (
-                  <div className="auto-style-146">{errors.phone.message}</div>
-                )}
-              </div>
+              )}
+
+              {/* PHONE ĐÃ BỊ XÓA */}
 
               <div className="form-group auto-style-142">
                 <label className="auto-style-143">
@@ -123,7 +132,7 @@ const Register = () => {
                   />
                 </div>
                 {errors.email && (
-                  <div className="auto-style-146">{errors.email.message}</div>
+                  <p style={{ color: "red", fontSize: "13px", marginTop: "4px", marginBottom: "0", fontWeight: "bold" }}>{errors.email.message}</p>
                 )}
               </div>
 
@@ -151,7 +160,7 @@ const Register = () => {
                   />
                 </div>
                 {errors.name && (
-                  <div className="auto-style-151">{errors.name.message}</div>
+                  <p style={{ color: "red", fontSize: "13px", marginTop: "4px", marginBottom: "0", fontWeight: "bold" }}>{errors.name.message}</p>
                 )}
               </div>
 
@@ -182,6 +191,9 @@ const Register = () => {
                     ></i>
                   </button>
                 </div>
+                {errors.password && (
+                  <p style={{ color: "red", fontSize: "13px", marginTop: "4px", marginBottom: "0", fontWeight: "bold" }}>{errors.password.message}</p>
+                )}
               </div>
 
               {/* CONFIRM */}
@@ -209,6 +221,9 @@ const Register = () => {
                     ></i>
                   </button>
                 </div>
+                {errors.confirmPassword && (
+                  <p style={{ color: "red", fontSize: "13px", marginTop: "4px", marginBottom: "0", fontWeight: "bold" }}>{errors.confirmPassword.message}</p>
+                )}
               </div>
 
               <button type="submit" className="submit-btn auto-style-177">

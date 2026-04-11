@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import ClientLayout from "./components/layout/ClientLayout";
 import AdminLayout from "./components/layout/AdminLayout";
+import PrivateRoute from "./components/PrivateRoute/index";
 
 // CLIENT PAGES
 import Home from "./pages/Client/Home";
@@ -36,12 +37,14 @@ function App() {
           <Route path="about" element={<About />} />
         </Route>
 
-        {/* ADMIN */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="cars" element={<Cars />} />
-          <Route path="cars/add" element={<AddCar />} />
-          <Route path="cars/edit/:id" element={<EditCar />} />
+        {/* ADMIN (Đã được bảo vệ bởi PrivateRoute, kèm quy định khắt khe bứt buộc phải là "admin") */}
+        <Route element={<PrivateRoute requiredRole="admin" />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="cars" element={<Cars />} />
+            <Route path="cars/add" element={<AddCar />} />
+            <Route path="cars/edit/:id" element={<EditCar />} />
+          </Route>
         </Route>
 
       </Routes>

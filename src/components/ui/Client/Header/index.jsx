@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const LOGO_SVG = (
   <svg
@@ -31,7 +31,18 @@ const LOGO_SVG = (
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname;
+
+  // Lấy token để kiểm tra trạng thái đăng nhập
+  const token = localStorage.getItem("token");
+
+  // Hàm xử lý đăng xuất
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/login"); // Đẩy về trang đăng nhập
+  };
 
   return (
     <nav id="navbar">
@@ -51,32 +62,56 @@ const Header = () => {
         </li>
       </ul>
       <div className="nav-btns">
-        <Link
-          to="/login"
-          className="btn-green"
-          style={{
-            textDecoration: "none",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxSizing: "border-box",
-          }}
-        >
-          Đăng nhập
-        </Link>
-        <Link
-          to="/register"
-          className="btn-green"
-          style={{
-            textDecoration: "none",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxSizing: "border-box",
-          }}
-        >
-          Đăng ký
-        </Link>
+        {token ? (
+          /* NẾU ĐÃ LOGIN: Hiện nút Đăng xuất */
+          <button
+            onClick={handleLogout}
+            className="btn-green"
+            style={{
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxSizing: "border-box",
+              border: "none",
+              cursor: "pointer",
+              background: "#ff4d4f", /* Màu đỏ mờ cảnh báo */
+              color: "white"
+            }}
+          >
+            Đăng xuất
+          </button>
+        ) : (
+          /* NẾU CHƯA LOGIN: Hiện 2 nút Đăng nhập & Đăng ký */
+          <>
+            <Link
+              to="/login"
+              className="btn-green"
+              style={{
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxSizing: "border-box",
+              }}
+            >
+              Đăng nhập
+            </Link>
+            <Link
+              to="/register"
+              className="btn-green"
+              style={{
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxSizing: "border-box",
+              }}
+            >
+              Đăng ký
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

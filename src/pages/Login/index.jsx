@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 const Login = () => {
@@ -10,10 +11,50 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  
+  // Khởi tạo các hook và biến trạng thái (state) mới
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const onLogin = (data) => {
-    console.log("Login data:", data);
-    alert("Đăng nhập thành công!");
+  const onLogin = async (data) => {
+    try {
+      setErrorMessage(""); // Xóa thông báo lỗi cũ hiển thị trên màn hình
+
+      // Gọi vào API Node.js backend port 5000 do mình mới setup ở bài trước
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,      // Gửi email
+          password: data.password // Gửi mật khẩu
+        }),
+      });
+
+      // Bóc tách dữ liệu gửi về từ API
+      const result = await response.json();
+
+      if (response.ok) {
+        // Đăng nhập thành công
+        alert("Đăng nhập thành công!");
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("role", result.role); // Ghi nhớ quyền quản trị viên hay User
+
+        // TRẠM KIỂM SOÁT VÉ VÀ ĐIỀU CHUYỂN
+        if (result.role === "admin") {
+          navigate("/admin"); // Chạy vào cửa sau Admin
+        } else {
+          navigate("/"); // Đi vòng ra cửa trước Client
+        }
+      } else {
+        // HTTP 400, 401...: Sai pass, sai tài khoản
+        setErrorMessage(result.message || "Tài khoản hoặc mật khẩu không chính xác");
+      }
+    } catch (error) {
+      setErrorMessage("Không thể kết nối đến máy chủ. Vui lòng bật lại Server nhé.");
+      console.error("Lỗi kĩ thuật:", error);
+    }
   };
 
   return (
@@ -48,33 +89,40 @@ const Login = () => {
 
             <form onSubmit={handleSubmit(onLogin)}>
               
-              {/* PHONE */}
+              {/* KHU VỰC HIỂN THỊ THÔNG BÁO LỖI TỪ SERVER TRẢ VỀ */}
+              {errorMessage && (
+                <div style={{ padding: "10px", marginBottom: "15px", backgroundColor: "#ffebee", color: "red", borderRadius: "5px", fontSize: "14px", fontWeight: "bold", textAlign: "center" }}>
+                  {errorMessage}
+                </div>
+              )}
+
+              {/* EMAIL */}
               <div className="form-group auto-style-124">
                 <label className="auto-style-125">
-                  Số điện thoại
+                  Email
                 </label>
 
                 <div className="input-wrap auto-style-126">
                   <input
-                    type="tel"
-                    placeholder="Nhập số điện thoại"
+                    type="email"
+                    placeholder="Nhập hộp thư email của bạn"
                     className="auto-style-128"
-                    {...register("phone", {
-                      required: "Vui lòng nhập số điện thoại",
+                    {...register("email", {
+                      required: "Vui lòng nhập Email",
                       pattern: {
-                        value: /^[0-9]{10,11}$/,
-                        message: "Số điện thoại không hợp lệ",
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Email sai định dạng (Ví dụ: phuong@fpt.edu.vn)",
                       },
                     })}
                     style={{
-                      border: errors.phone ? "1.5px solid red" : "",
+                      border: errors.email ? "1.5px solid red" : "",
                     }}
                   />
                 </div>
 
-                {errors.phone && (
-                  <p style={{ color: "red", fontSize: "12px" }}>
-                    {errors.phone.message}
+                {errors.email && (
+                  <p style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
+                    {errors.email.message}
                   </p>
                 )}
               </div>
